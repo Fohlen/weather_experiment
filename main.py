@@ -20,7 +20,7 @@ def log_forecasts(database_file: Path, station_ids: list[str]):
         station_id INTEGER NOT NULL,
         forecast_time INTEGER NOT NULL,
         forecast_type INTEGER NOT NULL,
-        value INTEGER NOT NULL
+        value REAL NOT NULL
     );
     """)
 
@@ -28,7 +28,7 @@ def log_forecasts(database_file: Path, station_ids: list[str]):
 
     request = DwdMosmixRequest(
         parameter=["ttt", "rr1c"],
-        mosmix_type=DwdMosmixType.LARGE,
+        mosmix_type=DwdMosmixType.SMALL,
     )
 
     stations = request.filter_by_station_id(station_ids)
