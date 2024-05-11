@@ -23,10 +23,10 @@ def insert_to_bigquery(cloud_event):
     """
 
     station_ids = os.environ.get("STATION_IDS", "").split(",")
-    print(f"Fetching forecasts for {len(station_ids)} stations", file=sys.stderr)
+    print(f"Fetching forecasts for {len(station_ids)} stations")
 
     rows = list(retrieve_forecasts(station_ids))
-    print(f"Inserting {len(rows)} forecasts", file=sys.stderr)
+    print(f"Inserting {len(rows)} forecasts")
 
     # Get the BigQuery client
     client = bigquery.Client()
@@ -37,7 +37,7 @@ def insert_to_bigquery(cloud_event):
     # Insert row into the table
     client.insert_rows(table_ref, [dict(zip(_KEYS, r)) for r in rows])
 
-    print("Data inserted successfully!", file=sys.stderr)
+    print("Data inserted successfully!")
 
 
 def retrieve_forecasts(station_ids: list[str]) -> Iterable[Forecast]:
