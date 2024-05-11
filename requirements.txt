@@ -1,1 +1,2 @@
 wetterdienst~=0.83.0
+google-cloud-bigquery~=3.22.0
