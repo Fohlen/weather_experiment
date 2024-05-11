@@ -4,6 +4,7 @@ import json
 from collections import namedtuple
 import sys
 import os
+from typing import Iterable
 
 from wetterdienst.provider.dwd.mosmix import DwdMosmixRequest, DwdMosmixType
 from google.cloud import bigquery
@@ -39,7 +40,7 @@ def insert_to_bigquery(cloud_event):
     print("Data inserted successfully!", file=sys.stderr)
 
 
-def retrieve_forecasts(station_ids: list[str]):
+def retrieve_forecasts(station_ids: list[str]) -> Iterable[Forecast]:
     request = DwdMosmixRequest(
         parameter=["ttt", "rr1c"],
         mosmix_type=DwdMosmixType.SMALL,
