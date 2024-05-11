@@ -20,7 +20,7 @@ def insert_to_bigquery(event, context):
       context: (google.cloud.functions.Context) Runtime metadata for the event.
     """
 
-    station_ids = os.environ.get("STATION_ID", "").split(",")
+    station_ids = os.environ.get("STATION_IDS", "").split(",")
     print(f"Fetching forecasts for {len(station_ids)} stations", file=sys.stderr)
 
     rows = list(retrieve_forecasts(station_ids))
@@ -30,7 +30,7 @@ def insert_to_bigquery(event, context):
     client = bigquery.Client()
 
     # Define your table reference (replace with your project, dataset and table)
-    table_ref = client.dataset(os.environ.get("BIGQUERY_DATASET")).table(os.environ.get("BIGQUERY_TABLE"))
+    table_ref = client.get_table(os.environ["BIGQUERY_TABLE"])
 
     # Insert row into the table
     client.insert_rows(table_ref, [dict(zip(_KEYS, r)) for r in rows])
