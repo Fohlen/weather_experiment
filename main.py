@@ -7,17 +7,18 @@ import os
 
 from wetterdienst.provider.dwd.mosmix import DwdMosmixRequest, DwdMosmixType
 from google.cloud import bigquery
+import functions_framework
 
 _KEYS = ["recorded_at", "station_id", "forecast_time", "parameter", "value"]
 Forecast = namedtuple("Forecast", _KEYS)
 
 
-def insert_to_bigquery(event, context):
+@functions_framework.cloud_event
+def insert_to_bigquery(cloud_event):
     """Inserts a row into a BigQuery table.
 
     Args:
-      event: (dict) Event payload from Cloud Function trigger.
-      context: (google.cloud.functions.Context) Runtime metadata for the event.
+      cloud_event: (dict) Event payload from Cloud Function trigger.
     """
 
     station_ids = os.environ.get("STATION_IDS", "").split(",")
