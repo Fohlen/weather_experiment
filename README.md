@@ -12,6 +12,6 @@ pip install -r requirements.txt
 
 We include one script for:
 
-- ![weather forecast aggregation via Google Cloud](./forecasts.py)
+- [weather forecast aggregation via Google Cloud](./forecasts.py)
 
 The stations used for this project are saved in [stations.txt](./stations.txt).
